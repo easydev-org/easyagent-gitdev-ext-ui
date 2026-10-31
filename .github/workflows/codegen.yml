@@ -91,6 +91,14 @@ jobs:
         run: |
           set -euo pipefail
           cd proto
+          # THE PLUGIN LIVES IN node_modules/.bin, WHICH IS NOT ON PATH. buf invokes plugins by name,
+          # so without this it fails with `exec: "protoc-gen-es": executable file not found` — a
+          # message that names the plugin but not where it was expected.
+          export PATH="${PWD}/../node_modules/.bin:${PATH}"
+          command -v protoc-gen-es >/dev/null || {
+            echo "::error::protoc-gen-es is not installed — is it in package.json's devDependencies?"
+            exit 1
+          }
           buf lint
           buf generate
 

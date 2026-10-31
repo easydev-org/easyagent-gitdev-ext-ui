@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "check": "svelte-check --tsconfig ./tsconfig.json"
+    "check": "svelte-check --tsconfig ./tsconfig.json",
+    "proto": "cd proto && PATH=\"$(pwd)/../node_modules/.bin:$PATH\" buf generate"
   },
   "devDependencies": {
     "@bufbuild/protobuf": "^2.16.0",
