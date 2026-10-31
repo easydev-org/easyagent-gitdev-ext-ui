@@ -133,25 +133,30 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git checkout -b "$branch"
           git add -A
-          git commit -m "chore: regenerate the client from the backend's proto
-
-The .proto in this repository is a copy of ${BACKEND}'s, and it no longer matched. Ingested the
-backend's version and regenerated, so the client and the server cannot disagree about a field name
-— which is the failure that produced an empty file tree once already."
+          # THE MESSAGE GOES IN A FILE, not in a heredoc inside `run:`. A multi-line quoted string in
+          # a YAML block scalar broke this workflow outright — GitHub reported the run as failed with
+          # ZERO jobs, which says nothing about the syntax error that caused it.
+          {
+            echo "chore: regenerate the client from the backend's proto"
+            echo
+            echo "The .proto here is a copy of ${BACKEND}'s and no longer matched. Ingested theirs and"
+            echo "regenerated, so client and server cannot disagree about a field name."
+          } > /tmp/msg.txt
+          git commit -F /tmp/msg.txt
           git push -u origin "$branch"
-          gh pr create --title "chore: sync the proto from the backend" --body "$(cat <<'BODY'
-This pull request was opened by CI because `${BACKEND}`'s \`proto/${PROTO_PATH}\` changed.
-
-**What happened**
-
-1. Fetched the backend's proto and compared it with this repository's copy.
-2. They differed, so the backend's version replaced the copy.
-3. Regenerated \`src/gen/\` with buf, and re-ran the type check and the build.
-
-**Why a pull request and not a push**
-
-A contract change that lands on main unreviewed is invisible. The diff is the thing to read: a field
-that was renamed, a type that widened, an RPC that appeared. If the panel needs a change to match, it
-will fail to type-check here — which is the point, and it is better seen now than in production.
-BODY
-)"
+          {
+            echo "Opened by CI because \`${BACKEND}\`'s \`proto/${PROTO_PATH}\` changed."
+            echo
+            echo "**What happened**"
+            echo
+            echo "1. Fetched the backend's proto and compared it with this repository's copy."
+            echo "2. They differed, so the backend's version replaced the copy."
+            echo "3. Regenerated \`src/gen/\` with buf, and re-ran the type check and the build."
+            echo
+            echo "**Why a pull request and not a push**"
+            echo
+            echo "A contract change that lands on main unreviewed is invisible. The diff is the thing"
+            echo "to read: a field renamed, a type widened, an RPC appeared. If the panel needs a change"
+            echo "to match it, the type check fails here — which is the point, and better seen now."
+          } > /tmp/body.md
+          gh pr create --title "chore: sync the proto from the backend" --body-file /tmp/body.md
