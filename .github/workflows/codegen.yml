@@ -9,11 +9,20 @@ name: proto
 # So the copy is never trusted — it is COMPARED against the backend on every run, and regenerated.
 
 on:
+  # TWO SEPARATE PUSH TRIGGERS, and they cannot be one.
+  #
+  # `branches: [main]` alone excludes tag pushes, so a tag used to produce a green run on main with no
+  # release and no run for the tag at all — the release step's `if startsWith(github.ref, ...)` was
+  # never evaluated anywhere, and the absence looked like a permissions problem.
+  #
+  # A tag is also NOT subject to `paths`: a release tag means "this commit is a release", not "this
+  # commit touched the proto". Folding them into one trigger makes one of those two facts false.
+  #
+  # TWO ENTRIES UNDER `push` IS NOT ALLOWED IN GITHUB ACTIONS — the second overwrites the first — so
+  # the path filter is applied per-step below with `if:` guards instead.
   push:
     branches: [main]
-    paths:
-      - 'proto/**'
-      - '.github/workflows/codegen.yml'
+    tags: ['v*']
   pull_request:
     paths:
       - 'proto/**'
