@@ -85,6 +85,36 @@ jobs:
           npm run check
           npm run build
 
+      # THE BUILT BUNDLE IS THE PRODUCT, so it is published as an artifact rather than left in a
+      # .gitignore'd dist/. The extension's Go binary embeds it, and its build must not need Node: it
+      # downloads ui.tar.gz from here and unrolls it into ui/.
+      #
+      # A TARBALL, NOT dist/ COMMITTED. Committing build output puts a generated directory in every
+      # diff and gives no version to pin; an artifact has a tag and a digest.
+      - name: pack the bundle
+        run: |
+          set -euo pipefail
+          test -f dist/index.html || { echo "::error::vite produced no dist/index.html"; exit 1; }
+          tar -czf ui.tar.gz -C dist .
+          echo "packed $(find dist -type f | wc -l) files, $(du -h ui.tar.gz | cut -f1)"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ui-bundle
+          path: ui.tar.gz
+          retention-days: 30
+
+      # A RELEASE ON EVERY TAG, carrying the bundle. That is the thing the Go build pins.
+      - name: publish the bundle
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          gh release create "${GITHUB_REF_NAME}" ui.tar.gz \
+            --title "${GITHUB_REF_NAME}" \
+            --notes "The built panel. Pinned by easyagent-gitdev-ext's ui/fetch-ui.sh via UI_VERSION."
+
       # A PULL REQUEST, NOT A PUSH TO MAIN. Generated code landing on main unreviewed is how a
       # contract change becomes invisible; a PR makes the diff — and the fact that it happened — the
       # thing somebody signs off on.
