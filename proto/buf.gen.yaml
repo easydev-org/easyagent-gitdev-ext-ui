@@ -1,0 +1,17 @@
+version: v2
+# The TypeScript side of the UI contract, generated from the SAME .proto as the Go backend.
+#
+# THE FILE IS A COPY, and proto/sync.sh keeps it byte-identical to the backend's. A generated client
+# that disagrees with a generated server is exactly the failure this whole change exists to remove, so
+# the copy is verified rather than trusted — see CI.
+plugins:
+  - local: protoc-gen-es
+    out: ../src/gen
+    opt:
+      - target=ts
+      - import_extension=js
+  - local: protoc-gen-connect-es
+    out: ../src/gen
+    opt:
+      - target=ts
+      - import_extension=js
