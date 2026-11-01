@@ -1,0 +1,8 @@
+{
+  "title": "Git",
+  "descriptions": {
+    "en": "Change code in a mirror without a clone, then land it on GitHub: pull requests, reviews and CI.",
+    "zh": "无需克隆，在镜像里改代码，再经 GitHub 落地：合并请求、评审与 CI。"
+  },
+  "icon": "/icon.svg"
+}
