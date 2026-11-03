@@ -79,8 +79,14 @@
     border-radius: var(--radius-sm);
     line-height: 1;
   }
-  .back:hover { background: var(--secondary); color: var(--foreground); }
-  .back:focus-visible { outline: 2px solid var(--primary); outline-offset: -2px; }
+  .back:hover {
+    background: var(--secondary);
+    color: var(--foreground);
+  }
+  .back:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: -2px;
+  }
 
   .repo {
     font: inherit;
@@ -94,8 +100,13 @@
     max-width: 16em;
     flex: 0 1 auto;
   }
-  .repo:hover { text-decoration: underline; }
-  .owner { color: var(--muted-foreground); font-weight: 400; }
+  .repo:hover {
+    text-decoration: underline;
+  }
+  .owner {
+    color: var(--muted-foreground);
+    font-weight: 400;
+  }
 
   .tabs {
     display: flex;
@@ -106,7 +117,9 @@
     overflow-x: auto;
     scrollbar-width: none;
   }
-  .tabs::-webkit-scrollbar { display: none; }
+  .tabs::-webkit-scrollbar {
+    display: none;
+  }
 
   .tab {
     font: inherit;
@@ -117,8 +130,14 @@
     border-radius: var(--radius-sm);
     white-space: nowrap;
   }
-  .tab:hover { background: var(--secondary); color: var(--foreground); }
-  .tab:focus-visible { outline: 2px solid var(--primary); outline-offset: -2px; }
+  .tab:hover {
+    background: var(--secondary);
+    color: var(--foreground);
+  }
+  .tab:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: -2px;
+  }
   /* The current tab is marked by weight AND a background, not colour alone. */
   .tab.active {
     color: var(--foreground);
@@ -127,10 +146,17 @@
   }
 
   @media (max-width: 720px) {
-    .nav { padding: var(--sp-xs, 4px) var(--sp-sm); gap: var(--sp-sm); }
+    .nav {
+      padding: var(--sp-xs, 4px) var(--sp-sm);
+      gap: var(--sp-sm);
+    }
     /* The owner is dropped before the tabs are: `easydev-org/test` on a phone leaves no room, and
        the repository NAME is what tells two of them apart. */
-    .owner { display: none; }
-    .tab { padding: 8px 10px; }
+    .owner {
+      display: none;
+    }
+    .tab {
+      padding: 8px 10px;
+    }
   }
 </style>

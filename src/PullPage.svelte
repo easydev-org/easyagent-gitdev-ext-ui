@@ -167,7 +167,9 @@
               {#if f.patch_truncated}
                 <!-- Saying so matters: an empty patch means GitHub did not send one (binary or too
                      large), not that the file did not change. -->
-                <div class="muted pad">GitHub did not provide this patch (binary or too large).</div>
+                <div class="muted pad">
+                  GitHub did not provide this patch (binary or too large).
+                </div>
               {:else if f.patch}
                 <pre class="diff">{f.patch}</pre>
               {:else}
@@ -341,18 +343,47 @@
     text-transform: uppercase;
     letter-spacing: 0.03em;
   }
-  .badge.ok { color: var(--success, #1a7f37); }
-  .badge.bad { color: var(--destructive); }
-  .badge.warn { color: var(--warning, #bf8700); }
-  .badge.merged { color: var(--primary); }
-  .badge.muted { color: var(--muted-foreground); }
-  .grow { flex: 1 1 auto; min-width: 0; }
-  .ellipsis { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .adds { color: var(--success, #1a7f37); flex: 0 0 auto; }
-  .dels { color: var(--destructive); flex: 0 0 auto; }
-  .muted { color: var(--muted-foreground); }
-  .totals { font-size: var(--text-micro, 11px); }
-  .pad { padding: var(--sp-sm); }
+  .badge.ok {
+    color: var(--success, #1a7f37);
+  }
+  .badge.bad {
+    color: var(--destructive);
+  }
+  .badge.warn {
+    color: var(--warning, #bf8700);
+  }
+  .badge.merged {
+    color: var(--primary);
+  }
+  .badge.muted {
+    color: var(--muted-foreground);
+  }
+  .grow {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+  .ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .adds {
+    color: var(--success, #1a7f37);
+    flex: 0 0 auto;
+  }
+  .dels {
+    color: var(--destructive);
+    flex: 0 0 auto;
+  }
+  .muted {
+    color: var(--muted-foreground);
+  }
+  .totals {
+    font-size: var(--text-micro, 11px);
+  }
+  .pad {
+    padding: var(--sp-sm);
+  }
   .state {
     padding: var(--sp-xl);
     text-align: center;

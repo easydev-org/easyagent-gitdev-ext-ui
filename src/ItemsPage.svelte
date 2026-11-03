@@ -71,13 +71,15 @@
                 <span class="grow">
                   <span class="name ellipsis">{it.title}</span>
                   <span class="sub muted ellipsis">
-                    #{it.number}{#if it.author} · {it.author}{/if}
+                    #{it.number}{#if it.author}
+                      · {it.author}{/if}
                     {#if it.comments > 0}· {it.comments} comment{it.comments === 1 ? '' : 's'}{/if}
                   </span>
                 </span>
                 {#if (it.labels ?? []).length > 0}
                   <span class="labels">
-                    {#each (it.labels ?? []).slice(0, 2) as l (l)}<span class="label">{l}</span>{/each}
+                    {#each (it.labels ?? []).slice(0, 2) as l (l)}<span class="label">{l}</span
+                      >{/each}
                   </span>
                 {/if}
               </a>
@@ -90,7 +92,12 @@
 {/if}
 
 <style>
-  .page { display: flex; flex-direction: column; min-height: 0; height: 100%; }
+  .page {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    height: 100%;
+  }
   .head {
     padding: var(--sp-md);
     display: flex;
@@ -105,7 +112,11 @@
        rather than the layout scrolling. */
     flex: 0 0 auto;
   }
-  .title { margin: 0; font-size: 1.05rem; font-weight: 600; }
+  .title {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 600;
+  }
   .toggle {
     font: inherit;
     font-size: var(--text-micro, 11px);
@@ -117,8 +128,13 @@
     color: var(--foreground);
     cursor: pointer;
   }
-  .toggle:hover { background: var(--secondary); }
-  .toggle:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+  .toggle:hover {
+    background: var(--secondary);
+  }
+  .toggle:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
 
   .body-scroll {
     overflow: auto;
@@ -128,7 +144,14 @@
     width: 100%;
     margin: 0 auto;
   }
-  .items { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
+  .items {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
   .item {
     display: flex;
     align-items: center;
@@ -139,12 +162,31 @@
     color: inherit;
     min-height: 44px;
   }
-  .item:hover { background: var(--secondary); }
-  .item:focus-visible { outline: 2px solid var(--primary); outline-offset: -2px; }
-  .grow { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 1px; }
-  .name { font-size: var(--text-body, 14px); }
-  .sub { font-size: var(--text-micro, 10px); }
-  .ellipsis { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .item:hover {
+    background: var(--secondary);
+  }
+  .item:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: -2px;
+  }
+  .grow {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+  .name {
+    font-size: var(--text-body, 14px);
+  }
+  .sub {
+    font-size: var(--text-micro, 10px);
+  }
+  .ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 
   .badge {
     flex: 0 0 auto;
@@ -157,10 +199,21 @@
     min-width: 5em;
     text-align: center;
   }
-  .badge.open { color: var(--success, #1a7f37); background: color-mix(in srgb, var(--success, #1a7f37) 14%, transparent); }
-  .badge.closed { color: var(--destructive, #cf222e); background: color-mix(in srgb, var(--destructive, #cf222e) 14%, transparent); }
+  .badge.open {
+    color: var(--success, #1a7f37);
+    background: color-mix(in srgb, var(--success, #1a7f37) 14%, transparent);
+  }
+  .badge.closed {
+    color: var(--destructive, #cf222e);
+    background: color-mix(in srgb, var(--destructive, #cf222e) 14%, transparent);
+  }
 
-  .labels { display: flex; gap: 4px; flex: 0 1 auto; overflow: hidden; }
+  .labels {
+    display: flex;
+    gap: 4px;
+    flex: 0 1 auto;
+    overflow: hidden;
+  }
   .label {
     font-size: var(--text-micro, 10px);
     padding: 1px 7px;
@@ -170,7 +223,10 @@
     white-space: nowrap;
   }
 
-  .state { padding: var(--sp-lg); text-align: center; }
+  .state {
+    padding: var(--sp-lg);
+    text-align: center;
+  }
   .state.err {
     color: var(--destructive);
     display: flex;
@@ -190,11 +246,21 @@
   }
 
   @media (max-width: 720px) {
-    .head { padding: var(--sp-sm); }
-    .body-scroll { padding: var(--sp-sm); }
+    .head {
+      padding: var(--sp-sm);
+    }
+    .body-scroll {
+      padding: var(--sp-sm);
+    }
     /* Labels go first: at this width they take the room the title needs. */
-    .labels { display: none; }
-    .toggle { padding: 8px 12px; }
-    .retry { padding: 10px 16px; }
+    .labels {
+      display: none;
+    }
+    .toggle {
+      padding: 8px 12px;
+    }
+    .retry {
+      padding: 10px 16px;
+    }
   }
 </style>

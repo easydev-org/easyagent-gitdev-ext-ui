@@ -9,6 +9,8 @@
     "dev": "vite",
     "format:check": "biome check .",
     "format:fix": "biome check --write .",
+    "format:svelte": "prettier --check \"src/**/*.svelte\"",
+    "format:svelte:fix": "prettier --write \"src/**/*.svelte\"",
     "proto": "cd proto && PATH=\"$(pwd)/../node_modules/.bin:$PATH\" buf generate"
   },
   "devDependencies": {
@@ -20,6 +22,8 @@
     "@types/dompurify": "^3.0.5",
     "dompurify": "^3.4.17",
     "marked": "^18.1.2",
+    "prettier": "^3.9.10",
+    "prettier-plugin-svelte": "^4.1.1",
     "shiki": "^4.5.0",
     "svelte": "^5.19.0",
     "svelte-check": "^4.1.4",

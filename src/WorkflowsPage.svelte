@@ -69,7 +69,12 @@
 {/if}
 
 <style>
-  .page { display: flex; flex-direction: column; min-height: 0; height: 100%; }
+  .page {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    height: 100%;
+  }
   .head {
     padding: var(--sp-md);
     display: flex;
@@ -83,7 +88,11 @@
        rather than the layout scrolling. */
     flex: 0 0 auto;
   }
-  .title { margin: 0; font-size: 1.05rem; font-weight: 600; }
+  .title {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 600;
+  }
   .body-scroll {
     overflow: auto;
     padding: var(--sp-md);
@@ -92,7 +101,14 @@
     width: 100%;
     margin: 0 auto;
   }
-  .flows { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
+  .flows {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
   .flow {
     display: flex;
     align-items: center;
@@ -101,18 +117,36 @@
     border-radius: var(--radius-sm);
     min-height: 44px;
   }
-  .flow:hover { background: var(--secondary); }
-  .grow { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 1px; }
-  .name { font-size: var(--text-body, 14px); }
-  .path { font-size: var(--text-micro, 10px); }
-  .ellipsis { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .flow:hover {
+    background: var(--secondary);
+  }
+  .grow {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+  .name {
+    font-size: var(--text-body, 14px);
+  }
+  .path {
+    font-size: var(--text-micro, 10px);
+  }
+  .ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
   .ext {
     flex: 0 0 auto;
     font-size: var(--text-micro, 11px);
     color: var(--primary);
     text-decoration: none;
   }
-  .ext:hover { text-decoration: underline; }
+  .ext:hover {
+    text-decoration: underline;
+  }
 
   .badge {
     flex: 0 0 auto;
@@ -125,10 +159,19 @@
     min-width: 5em;
     text-align: center;
   }
-  .badge.ok { color: var(--success, #1a7f37); background: color-mix(in srgb, var(--success, #1a7f37) 14%, transparent); }
-  .badge.muted { color: var(--muted-foreground); background: var(--secondary); }
+  .badge.ok {
+    color: var(--success, #1a7f37);
+    background: color-mix(in srgb, var(--success, #1a7f37) 14%, transparent);
+  }
+  .badge.muted {
+    color: var(--muted-foreground);
+    background: var(--secondary);
+  }
 
-  .state { padding: var(--sp-lg); text-align: center; }
+  .state {
+    padding: var(--sp-lg);
+    text-align: center;
+  }
   .state.err {
     color: var(--destructive);
     display: flex;
@@ -148,8 +191,14 @@
   }
 
   @media (max-width: 720px) {
-    .head { padding: var(--sp-sm); }
-    .body-scroll { padding: var(--sp-sm); }
-    .retry { padding: 10px 16px; }
+    .head {
+      padding: var(--sp-sm);
+    }
+    .body-scroll {
+      padding: var(--sp-sm);
+    }
+    .retry {
+      padding: 10px 16px;
+    }
   }
 </style>
