@@ -2,12 +2,12 @@
   import { onMount } from 'svelte'
   import { api, type FileBody, type Ref, type TreeEntry } from './api'
   import {
-    announceReady,
+    connectToHost,
     receiveCardData,
     reportCardHeight,
     requestOpenView,
     type CardPayload,
-  } from './theme.svelte'
+  } from '@easydev-org/ext-ui'
   import ToolCard from './ToolCard.svelte'
   import PullPage from './PullPage.svelte'
   import IssuePage from './IssuePage.svelte'
@@ -233,8 +233,13 @@
     onHash()
     window.addEventListener('hashchange', onHash)
 
-    announceReady()
-    return () => window.removeEventListener('hashchange', onHash)
+    // Listens for theme changes AND announces readiness — the two halves the host needs to send
+    // the first message at all.
+    const stopHost = connectToHost()
+    return () => {
+      stopHost()
+      window.removeEventListener('hashchange', onHash)
+    }
   })
 
   // The card frame is sized by the HOST, using a height only this document knows.
@@ -249,7 +254,11 @@
     error = ''
     // A tool may say where its result lives. The route is the tool's to build — only it knows which
     // repository the result was about.
-    const v = (p as { view?: { route?: string; title?: string } }).view
+    //
+    // IT IS UNDER `data`, NOT AT THE TOP LEVEL. The host forwards the tool result's `data` as-is, and
+    // `view` is one of its keys — reading `p.view` returned undefined for every card, so the "open the
+    // full view" button never appeared and nothing reported it.
+    const v = (p.data as { view?: { route?: string; title?: string } } | undefined)?.view
     openTarget = v?.route
       ? { route: v.route, label: 'Open', title: v.title ?? 'Open' }
       : null

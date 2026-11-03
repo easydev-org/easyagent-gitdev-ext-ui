@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "@connectrpc/connect-web": "^2.3.0",
-    "@shikijs/transformers": "^4.5.0"
+    "@shikijs/transformers": "^4.5.0",
+    "@easydev-org/ext-ui": "^0.2.1"
   }
 }
