@@ -58,6 +58,10 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - run: npm ci --no-audit --no-fund
+        env:
+          # @easydev-org/ext-ui is a private package on npm.pkg.github.com; an unauthenticated
+          # `npm ci` fails with a 401 that reads like a network problem.
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # COMPARE THIS COPY AGAINST THE BACKEND'S — when the backend is readable.
       #

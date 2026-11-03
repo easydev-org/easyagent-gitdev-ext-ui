@@ -1,0 +1,53 @@
+name: ci
+
+# THE ONLY CHECK THIS REPOSITORY HAD WAS THE PROTO SYNC, which runs on a schedule and only looks at
+# `proto/**`. Nothing built the panel on a pull request, so a change that did not type-check could
+# merge — and the first place it failed was the Go extension's image build, which downloads this
+# repository's bundle as an artifact.
+#
+# This is also the ONE place `@easydev-org/ext-ui` is installed from GitHub Packages. The package is
+# private, so the token has to be a real one (see the permissions block) — without it `npm ci` fails
+# with a 401 that looks like a network problem.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  # `npm ci` resolves @easydev-org/ext-ui from npm.pkg.github.com, which requires an authenticated
+  # read of this organisation's packages. GITHUB_TOKEN is enough for that: no PAT, nothing to rotate.
+  packages: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      # `npm ci` against the committed lockfile: a package.json that names a version the lock does not
+      # have fails here rather than resolving something else.
+      - run: npm ci --no-audit --no-fund
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # TYPES BEFORE THE BUILD. svelte-check reports a type error in a `.svelte` file that vite would
+      # happily bundle, so a build-only gate lets one through and it fails at runtime instead.
+      - run: npm run check
+
+      - run: npm run build
+
+      # The bundle is what the Go extension embeds; a build that compiles but emits nothing usable is
+      # invisible until the extension serves a blank page.
+      - name: the build produced a usable bundle
+        run: |
+          set -euo pipefail
+          test -f dist/index.html || { echo "::error::vite produced no dist/index.html"; exit 1; }
+          echo "packed $(find dist -type f | wc -l) files"

@@ -7,7 +7,7 @@
   //
   // The host picks this component by the `template` the tool declared; the template name IS the tool
   // name, which keeps the mapping obvious and means a new tool needs no new concept.
-  import type { CardPayload } from './theme.svelte'
+  import type { CardPayload } from '@easydev-org/ext-ui'
 
   let { payload }: { payload: CardPayload } = $props()
 
