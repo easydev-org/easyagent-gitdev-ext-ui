@@ -41,6 +41,12 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
+      # `npm ci` resolves @easydev-org/ext-ui from GitHub Packages. WITH `packages` LISTED AS ANYTHING
+      # ELSE THE JOB HAS NO PACKAGE ACCESS AT ALL: declaring `permissions` at all replaces the
+      # repository defaults, so `packages` defaults to `none` here — and the install fails with
+      # "Permission installation not allowed to Read organization package", which reads like the
+      # package is private to a different org rather than like a missing permission in this file.
+      packages: read
     steps:
       - uses: actions/checkout@v4
         with:
