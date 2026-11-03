@@ -33,10 +33,44 @@ const LANG_ALIASES: Record<string, string> = {
 
 /** Languages we are willing to load. Anything else renders as plain text. */
 const KNOWN = new Set([
-  'bash', 'c', 'cpp', 'csharp', 'css', 'diff', 'docker', 'go', 'graphql', 'hcl', 'html', 'ini',
-  'java', 'javascript', 'json', 'jsx', 'kotlin', 'less', 'lua', 'make', 'markdown', 'nginx',
-  'php', 'proto', 'python', 'ruby', 'rust', 'scss', 'shellscript', 'sql', 'svelte', 'swift',
-  'toml', 'tsx', 'typescript', 'vue', 'xml', 'yaml',
+  'bash',
+  'c',
+  'cpp',
+  'csharp',
+  'css',
+  'diff',
+  'docker',
+  'go',
+  'graphql',
+  'hcl',
+  'html',
+  'ini',
+  'java',
+  'javascript',
+  'json',
+  'jsx',
+  'kotlin',
+  'less',
+  'lua',
+  'make',
+  'markdown',
+  'nginx',
+  'php',
+  'proto',
+  'python',
+  'ruby',
+  'rust',
+  'scss',
+  'shellscript',
+  'sql',
+  'svelte',
+  'swift',
+  'toml',
+  'tsx',
+  'typescript',
+  'vue',
+  'xml',
+  'yaml',
 ])
 
 let engine: Promise<import('shiki').Highlighter> | null = null
@@ -46,7 +80,10 @@ async function highlighter(): Promise<import('shiki').Highlighter> {
     // github-light / github-dark match the host's two palettes more closely than any other pair,
     // and using the SAME pair for every file keeps the panel visually coherent.
     engine = import('shiki').then(m =>
-      m.createHighlighter({ themes: ['github-light', 'github-dark'], langs: [] }),
+      m.createHighlighter({
+        themes: ['github-light', 'github-dark'],
+        langs: [],
+      }),
     )
   }
   return engine
@@ -81,7 +118,9 @@ export async function highlight(
     // SINGULAR `Number`: the export is `transformerRenderLineNumber`. It prepends a
     // `<span class="line-number">` to every line — a real element, not a CSS counter, so the numbers
     // belong to the SOURCE lines rather than to the rendered rows.
-    const { transformerRenderLineNumber } = await import('@shikijs/transformers')
+    const { transformerRenderLineNumber } = await import(
+      '@shikijs/transformers'
+    )
     return h.codeToHtml(code, {
       lang,
       theme: dark ? 'github-dark' : 'github-light',

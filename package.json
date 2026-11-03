@@ -4,12 +4,15 @@
   "type": "module",
   "version": "0.1.0",
   "scripts": {
-    "dev": "vite",
     "build": "vite build",
     "check": "svelte-check --tsconfig ./tsconfig.json",
+    "dev": "vite",
+    "format:check": "biome check .",
+    "format:fix": "biome check --write .",
     "proto": "cd proto && PATH=\"$(pwd)/../node_modules/.bin:$PATH\" buf generate"
   },
   "devDependencies": {
+    "@biomejs/biome": "^2.6.4",
     "@bufbuild/protobuf": "^2.16.0",
     "@bufbuild/protoc-gen-es": "^2.16.0",
     "@connectrpc/connect": "^2.3.0",

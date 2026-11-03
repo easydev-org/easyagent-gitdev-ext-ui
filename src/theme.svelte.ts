@@ -9,7 +9,11 @@
 // so callers keep reading `theme.mode` — every existing `theme.mode === 'dark'` in a `$derived` keeps
 // working, and a dependency on it is still tracked.
 
-import { currentTheme, onThemeChange, type ThemeMode } from '@easydev-org/ext-ui'
+import {
+  currentTheme,
+  onThemeChange,
+  type ThemeMode,
+} from '@easydev-org/ext-ui'
 
 const mode = $state<{ current: ThemeMode }>({ current: currentTheme() })
 

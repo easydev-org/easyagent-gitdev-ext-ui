@@ -5,11 +5,11 @@
 
 import { client } from './client.js'
 import {
-  MirrorState as MirrorStateProto,
   type Comment as CommentProto,
   type FileChange as FileChangeProto,
   type IssueSummary as IssueSummaryProto,
   type JobSummary as JobSummaryProto,
+  MirrorState as MirrorStateProto,
   type RunSummary as RunSummaryProto,
   type WorkflowSummary as WorkflowSummaryProto,
 } from './gen/ui/v1/ui_pb.js'
@@ -210,15 +210,30 @@ const BRIDGE_REQUEST = 'easyagent:ext-fetch'
 const BRIDGE_RESPONSE = 'easyagent:ext-fetch:result'
 
 let seq = 0
-const pending = new Map<string, (r: { ok: boolean; status: number; body?: unknown; error?: string }) => void>()
+const pending = new Map<
+  string,
+  (r: { ok: boolean; status: number; body?: unknown; error?: string }) => void
+>()
 
 window.addEventListener('message', (ev: MessageEvent) => {
-  const d = ev.data as { type?: string; id?: string; ok?: boolean; status?: number; body?: unknown; error?: string } | null
+  const d = ev.data as {
+    type?: string
+    id?: string
+    ok?: boolean
+    status?: number
+    body?: unknown
+    error?: string
+  } | null
   if (d?.type !== BRIDGE_RESPONSE || typeof d.id !== 'string') return
   const done = pending.get(d.id)
   if (!done) return
   pending.delete(d.id)
-  done({ ok: Boolean(d.ok), status: d.status ?? 0, body: d.body, error: d.error })
+  done({
+    ok: Boolean(d.ok),
+    status: d.status ?? 0,
+    body: d.body,
+    error: d.error,
+  })
 })
 
 /**
@@ -229,7 +244,9 @@ window.addEventListener('message', (ev: MessageEvent) => {
  * so requests go straight to the same origin. That keeps the UI usable standalone instead of
  * hanging for five seconds on every call with no way to see why.
  */
-function ask(path: string): Promise<{ ok: boolean; status: number; body?: unknown; error?: string }> {
+function ask(
+  path: string,
+): Promise<{ ok: boolean; status: number; body?: unknown; error?: string }> {
   // A token in storage means we can just fetch: no host involvement, no timeout to wait out.
   if (bearer() !== '') return direct(path)
   return new Promise(resolve => {
@@ -277,11 +294,18 @@ async function direct(
     }
     return { ok: r.ok, status: r.status, body }
   } catch (e) {
-    return { ok: false, status: 0, error: e instanceof Error ? e.message : String(e) }
+    return {
+      ok: false,
+      status: 0,
+      error: e instanceof Error ? e.message : String(e),
+    }
   }
 }
 
-async function get<T>(path: string, params: Record<string, string | undefined> = {}): Promise<T> {
+async function get<T>(
+  path: string,
+  params: Record<string, string | undefined> = {},
+): Promise<T> {
   const r = await ask(`${path}?${qs(params)}`)
   if (!r.ok) {
     const body = r.body as { error?: string } | string | undefined
@@ -330,7 +354,11 @@ export const api = {
     const out: Record<string, MirrorState> = {}
     for (const [name, state] of Object.entries(r.mirrored)) {
       out[name] =
-        state === MirrorStateProto.READY ? 'ready' : state === MirrorStateProto.EMPTY ? 'empty' : 'missing'
+        state === MirrorStateProto.READY
+          ? 'ready'
+          : state === MirrorStateProto.EMPTY
+            ? 'empty'
+            : 'missing'
     }
     return out
   },
@@ -351,7 +379,8 @@ export const api = {
   },
   orgs: async () => (await client.listOrgs({})).orgs,
   whoami: async () => (await client.getWhoami({})).login,
-  releases: async (repo: string, limit = 20) => (await client.listReleases({ repo, limit })).releases,
+  releases: async (repo: string, limit = 20) =>
+    (await client.listReleases({ repo, limit })).releases,
   workflows: async (repo: string) =>
     (await client.listWorkflows({ repo })).workflows.map(workflowView),
   // THE MIRROR. These read the forge, not a local checkout: there is no checkout any more, and the
@@ -370,7 +399,12 @@ export const api = {
   },
   repoInfo: async (repo: string) => {
     const r = await client.getRepo({ repo })
-    return { repo: r.repo, branches: r.branches, defaultBranch: r.defaultBranch, tags: r.tags }
+    return {
+      repo: r.repo,
+      branches: r.branches,
+      defaultBranch: r.defaultBranch,
+      tags: r.tags,
+    }
   },
   /** Every branch and tag, with the kind, so one dropdown can switch between both. */
   refs: async (repo: string) => (await client.listRefs({ repo })).refs,
@@ -383,7 +417,8 @@ export const api = {
   },
   pullFiles: async (repo: string, number: number) =>
     (await client.listPullFiles({ repo, number })).files.map(pullFile),
-  pullDiff: async (repo: string, number: number) => (await client.getPullDiff({ repo, number })).diff,
+  pullDiff: async (repo: string, number: number) =>
+    (await client.getPullDiff({ repo, number })).diff,
   pullChecks: async (repo: string, number: number) => {
     const r = await client.getPullChecks({ repo, number })
     return { state: r.state, sha: r.sha, checks: r.checks }
@@ -396,11 +431,20 @@ export const api = {
     return issueView(i)
   },
   issueComments: async (repo: string, number: number) =>
-    (await client.listIssueComments({ repo, number })).comments.map(commentView),
+    (await client.listIssueComments({ repo, number })).comments.map(
+      commentView,
+    ),
   // Issues OR pull requests. One query with a filter, applied on the SERVER so a caller cannot forget
   // it — and a `kind` that is neither is refused rather than silently ignored.
-  issues: async (repo: string, kind: 'issue' | 'pr', state = 'open', limit = 50) =>
-    (await client.listIssues({ repo, kind, state, limit })).items.map(issueView),
+  issues: async (
+    repo: string,
+    kind: 'issue' | 'pr',
+    state = 'open',
+    limit = 50,
+  ) =>
+    (await client.listIssues({ repo, kind, state, limit })).items.map(
+      issueView,
+    ),
   // CI runs. The log is fetched PER JOB and only when asked: a run's logs are megabytes, and a page
   // that fetched them all would be slow for a reader who wanted one job.
   runs: async (repo: string, limit = 20) =>
@@ -412,7 +456,8 @@ export const api = {
   },
   runJobs: async (repo: string, id: number) =>
     (await client.listRunJobs({ repo, id: BigInt(id) })).jobs.map(jobView),
-  jobLog: async (repo: string, job: number) => (await client.getJobLog({ repo, jobId: BigInt(job) })).log,
+  jobLog: async (repo: string, job: number) =>
+    (await client.getJobLog({ repo, jobId: BigInt(job) })).log,
 }
 
 // ---------------------------------------------------------------------------
