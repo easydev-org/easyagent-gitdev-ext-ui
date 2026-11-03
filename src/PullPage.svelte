@@ -9,6 +9,7 @@
   // to look, the files when actually reviewing.
   import { onMount } from 'svelte'
   import { api, type PullChecks, type PullFile, type PullView } from './api'
+  import DiffView from './DiffView.svelte'
 
   let { repo, number }: { repo: string; number: number } = $props()
 
@@ -169,7 +170,10 @@
                      large), not that the file did not change. -->
                 <div class="muted pad">GitHub did not provide this patch (binary or too large).</div>
               {:else if f.patch}
-                <pre class="diff">{f.patch}</pre>
+                <!-- A UNIFIED DIFF RENDERED AS ONE, not printed. This was a bare <pre>{f.patch}</pre>,
+                     so an added and a removed line looked identical and a reviewer parsed `+`/`-`
+                     by eye across a scroll. -->
+                <DiffView patch={f.patch} maxHeight={420} />
               {:else}
                 <div class="muted pad">No patch.</div>
               {/if}
@@ -323,17 +327,6 @@
   }
   .file-head:hover {
     background: var(--muted);
-  }
-  .diff {
-    margin: 0;
-    padding: var(--sp-sm);
-    max-height: 360px;
-    overflow: auto;
-    font-family: 'NotoSansMono', ui-monospace, monospace;
-    font-size: 11px;
-    line-height: 1.45;
-    white-space: pre;
-    background: var(--background);
   }
   .badge {
     flex: 0 0 auto;

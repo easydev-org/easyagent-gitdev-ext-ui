@@ -8,6 +8,8 @@
   // The host picks this component by the `template` the tool declared; the template name IS the tool
   // name, which keeps the mapping obvious and means a new tool needs no new concept.
   import type { CardPayload } from '@easydev-org/ext-ui'
+  import CodeView from './CodeView.svelte'
+  import DiffView from './DiffView.svelte'
 
   let { payload }: { payload: CardPayload } = $props()
 
@@ -145,8 +147,19 @@
           <span class="muted">· {payload.data['size']} B</span>
         {/if}
       </h3>
-      <!-- The file, line-numbered, exactly as the tool returned it. -->
-      <pre class="pre scroll">{payload.output}</pre>
+      <!-- HIGHLIGHTED AND NUMBERED, like the file page. It was neither: this printed `payload.output`
+           into a bare <pre>, and the comment above it claimed it was line-numbered.
+
+           THE SOURCE IS `data.content`, NOT `output`. The extension's tool returns `output` already
+           prefixed with `N| ` gutters (see numberLines in the backend), which is right for a language
+           model reading a transcript and wrong for a viewer that draws its own — the prefixes would be
+           highlighted as part of the code. `content` is the file itself. -->
+      <CodeView
+        code={typeof payload.data['content'] === 'string' ? (payload.data['content'] as string) : payload.output}
+        lang={s('path') || inputStr('path')}
+        wrap
+        maxHeight={360}
+      />
     </section>
 
   {:else if payload.tool === 'git-file-patch'}
@@ -217,7 +230,10 @@
       {#if payload.data['truncated'] === true}
         <div class="muted">(truncated — see the tool output for the rest)</div>
       {/if}
-      <pre class="pre scroll">{payload.output}</pre>
+      <!-- RENDERED AS A DIFF, not as text containing `+` and `-`. A card is the place this matters
+           most: it is a few hundred pixels tall, so a reader cannot scroll a washed-out wall of
+           monospace to find out what changed. -->
+      <DiffView patch={payload.output} maxHeight={420} />
     </section>
 
   {:else if payload.tool === 'gh-pr-checks'}
