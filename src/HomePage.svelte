@@ -63,7 +63,10 @@
 
   onMount(() => {
     // The login is cosmetic — a heading — so its failure must not stop the list.
-    void api.whoami().then(l => (login = l)).catch(() => {})
+    void api
+      .whoami()
+      .then(l => (login = l))
+      .catch(() => {})
     void load()
   })
 
@@ -203,22 +206,22 @@
                   {#if r.archived}<span class="badge warn">archived</span>{/if}
                 </button>
               {:else}
-              <a class="repo" href={`#/files/${parts[0]}/${parts[1]}`}>
-                <span class="grow">
-                  <span class="name ellipsis">
-                    <span class="muted">{parts[0]}/</span>{parts[1]}
+                <a class="repo" href={`#/files/${parts[0]}/${parts[1]}`}>
+                  <span class="grow">
+                    <span class="name ellipsis">
+                      <span class="muted">{parts[0]}/</span>{parts[1]}
+                    </span>
+                    {#if r.description}
+                      <span class="sub muted ellipsis">{r.description}</span>
+                    {/if}
                   </span>
-                  {#if r.description}
-                    <span class="sub muted ellipsis">{r.description}</span>
+                  {#if st === 'unknown'}
+                    <span class="badge muted">…</span>
                   {/if}
-                </span>
-                {#if st === 'unknown'}
-                  <span class="badge muted">…</span>
-                {/if}
-                {#if r.private}<span class="badge">private</span>{/if}
-                {#if r.archived}<span class="badge warn">archived</span>{/if}
-                {#if r.fork}<span class="badge muted">fork</span>{/if}
-              </a>
+                  {#if r.private}<span class="badge">private</span>{/if}
+                  {#if r.archived}<span class="badge warn">archived</span>{/if}
+                  {#if r.fork}<span class="badge muted">fork</span>{/if}
+                </a>
               {/if}
             </li>
           {/each}
@@ -229,7 +232,12 @@
 {/if}
 
 <style>
-  .page { display: flex; flex-direction: column; min-height: 0; height: 100%; }
+  .page {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    height: 100%;
+  }
   .head {
     padding: var(--sp-md);
     display: flex;
@@ -244,7 +252,11 @@
        rather than the layout scrolling. */
     flex: 0 0 auto;
   }
-  .title { margin: 0; font-size: 1.05rem; font-weight: 600; }
+  .title {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 600;
+  }
 
   .orgs {
     display: flex;
@@ -260,7 +272,9 @@
        "this row is as tall as its buttons and gives none of it away". */
     flex: 0 0 auto;
   }
-  .orgs::-webkit-scrollbar { display: none; }
+  .orgs::-webkit-scrollbar {
+    display: none;
+  }
   .org {
     font: inherit;
     font-size: var(--text-meta, 12px);
@@ -276,8 +290,14 @@
     white-space: nowrap;
     flex: 0 0 auto;
   }
-  .org:hover { background: var(--secondary); color: var(--foreground); }
-  .org:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+  .org:hover {
+    background: var(--secondary);
+    color: var(--foreground);
+  }
+  .org:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
   .org.active {
     background: var(--secondary);
     color: var(--foreground);
@@ -293,7 +313,14 @@
     width: 100%;
     margin: 0 auto;
   }
-  .repos { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
+  .repos {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
   .repo {
     display: flex;
     align-items: center;
@@ -304,12 +331,32 @@
     color: inherit;
     min-height: 48px;
   }
-  .repo:hover { background: var(--secondary); }
-  .repo:focus-visible { outline: 2px solid var(--primary); outline-offset: -2px; }
-  .grow { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 1px; }
-  .name { font-size: var(--text-body, 14px); font-weight: 600; }
-  .sub { font-size: var(--text-micro, 11px); }
-  .ellipsis { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .repo:hover {
+    background: var(--secondary);
+  }
+  .repo:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: -2px;
+  }
+  .grow {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+  .name {
+    font-size: var(--text-body, 14px);
+    font-weight: 600;
+  }
+  .sub {
+    font-size: var(--text-micro, 11px);
+  }
+  .ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 
   .badge {
     flex: 0 0 auto;
@@ -319,8 +366,13 @@
     border: 1px solid var(--border);
     color: var(--muted-foreground);
   }
-  .badge.warn { color: var(--warning, #9a6700); border-color: currentColor; }
-  .badge.muted { opacity: 0.7; }
+  .badge.warn {
+    color: var(--warning, #9a6700);
+    border-color: currentColor;
+  }
+  .badge.muted {
+    opacity: 0.7;
+  }
   /* The row that cannot be opened says so quietly. Loud enough to be seen before the click, not so
      loud that a page of mostly-unmirrored repositories reads as an error state. */
   .badge.notmirrored {
@@ -342,13 +394,24 @@
     border: 0;
     cursor: pointer;
   }
-  .repo.setup:hover { background: var(--secondary); }
-  .repo.setup:focus-visible { outline: 2px solid var(--primary); outline-offset: -2px; }
+  .repo.setup:hover {
+    background: var(--secondary);
+  }
+  .repo.setup:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: -2px;
+  }
   /* While one is copying, the rest are inert: a forge-side fetch of a whole branch is not something
      to run ten of at once. */
-  .repo.setup:disabled { cursor: default; }
-  .repo.setup:disabled:hover { background: none; }
-  .repo.busy { opacity: 1; }
+  .repo.setup:disabled {
+    cursor: default;
+  }
+  .repo.setup:disabled:hover {
+    background: none;
+  }
+  .repo.busy {
+    opacity: 1;
+  }
   .badge.working {
     color: var(--primary);
     border-color: currentColor;
@@ -357,9 +420,14 @@
     color: var(--destructive, #cf222e);
     border-color: currentColor;
   }
-  .errtext { color: var(--destructive, #cf222e); }
+  .errtext {
+    color: var(--destructive, #cf222e);
+  }
 
-  .state { padding: var(--sp-lg); text-align: center; }
+  .state {
+    padding: var(--sp-lg);
+    text-align: center;
+  }
   .state.err {
     color: var(--destructive);
     display: flex;
@@ -379,10 +447,20 @@
   }
 
   @media (max-width: 720px) {
-    .head { padding: var(--sp-sm); }
-    .orgs { padding: 0 var(--sp-sm) var(--sp-sm); }
-    .body-scroll { padding: 0 var(--sp-sm) var(--sp-sm); }
-    .org { padding: 8px 12px; }
-    .retry { padding: 10px 16px; }
+    .head {
+      padding: var(--sp-sm);
+    }
+    .orgs {
+      padding: 0 var(--sp-sm) var(--sp-sm);
+    }
+    .body-scroll {
+      padding: 0 var(--sp-sm) var(--sp-sm);
+    }
+    .org {
+      padding: 8px 12px;
+    }
+    .retry {
+      padding: 10px 16px;
+    }
   }
 </style>

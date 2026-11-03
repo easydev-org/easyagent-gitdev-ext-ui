@@ -44,7 +44,6 @@
       stale = true
     }
   })
-
 </script>
 
 {#if !file}
@@ -126,7 +125,9 @@
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
   }
-  .hint { padding-top: 4px; }
+  .hint {
+    padding-top: 4px;
+  }
   .state {
     padding: var(--sp-xl);
     text-align: center;
@@ -165,7 +166,11 @@
     line-height: 1.5;
     tab-size: 4;
   }
-  .plain-line { display: flex; white-space: pre-wrap; overflow-wrap: anywhere; }
+  .plain-line {
+    display: flex;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
   .plain-n {
     flex: 0 0 auto;
     width: 3.5em;
@@ -175,5 +180,8 @@
     opacity: 0.6;
     user-select: none;
   }
-  .plain-t { flex: 1 1 auto; min-width: 0; }
+  .plain-t {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
 </style>

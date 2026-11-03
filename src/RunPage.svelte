@@ -271,7 +271,9 @@
                     <div class="pre">
                       {#each logLines(logs[j.id]) as line, i (i)}
                         <div class="line">
-                          {#if line.ts}<span class="ts">{line.ts}</span>{/if}<span class="body">{line.body}</span>
+                          {#if line.ts}<span class="ts">{line.ts}</span>{/if}<span class="body"
+                            >{line.body}</span
+                          >
                         </div>
                       {/each}
                     </div>
@@ -293,7 +295,9 @@
     min-height: 0;
     height: 100%;
   }
-  .rule { border-bottom: 1px solid var(--border); }
+  .rule {
+    border-bottom: 1px solid var(--border);
+  }
   .head {
     padding: var(--sp-md);
     display: flex;
@@ -307,8 +311,19 @@
        rather than the layout scrolling. */
     flex: 0 0 auto;
   }
-  .title-row { display: flex; align-items: baseline; gap: var(--sp-sm); flex-wrap: wrap; min-width: 0; }
-  .title { margin: 0; font-size: 1.05rem; font-weight: 600; overflow-wrap: anywhere; }
+  .title-row {
+    display: flex;
+    align-items: baseline;
+    gap: var(--sp-sm);
+    flex-wrap: wrap;
+    min-width: 0;
+  }
+  .title {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+  }
   .meta {
     display: flex;
     flex-wrap: wrap;
@@ -316,8 +331,13 @@
     font-size: var(--text-micro, 11px);
     color: var(--muted-foreground);
   }
-  .ext { color: var(--primary); text-decoration: none; }
-  .ext:hover { text-decoration: underline; }
+  .ext {
+    color: var(--primary);
+    text-decoration: none;
+  }
+  .ext:hover {
+    text-decoration: underline;
+  }
 
   .body-scroll {
     overflow: auto;
@@ -327,7 +347,14 @@
     width: 100%;
     margin: 0 auto;
   }
-  .jobs { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--sp-sm); }
+  .jobs {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-sm);
+  }
   .job {
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
@@ -351,8 +378,13 @@
     color: var(--foreground);
     cursor: pointer;
   }
-  .allbtn:hover { background: var(--secondary); }
-  .allbtn:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+  .allbtn:hover {
+    background: var(--secondary);
+  }
+  .allbtn:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
 
   /* The whole row is the button: it is the largest target and the one a reader aims at when they
      click a job's name. Styled to look like a row, not like the UA's default button. */
@@ -370,11 +402,21 @@
     padding: 0;
     cursor: pointer;
   }
-  .job-head:hover .job-name { text-decoration: underline; }
-  .job-head:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; border-radius: var(--radius-sm); }
+  .job-head:hover .job-name {
+    text-decoration: underline;
+  }
+  .job-head:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 3px;
+    border-radius: var(--radius-sm);
+  }
   /* A job with no log is not a control: it says why and does nothing. */
-  .job-head:disabled { cursor: default; }
-  .job-head:disabled:hover .job-name { text-decoration: none; }
+  .job-head:disabled {
+    cursor: default;
+  }
+  .job-head:disabled:hover .job-name {
+    text-decoration: none;
+  }
 
   /* The chevron is the affordance. Rotating it rather than swapping the glyph keeps the row's width
      stable, which stops the name from shifting when a log opens. */
@@ -384,24 +426,67 @@
     color: var(--muted-foreground);
     transition: transform 0.12s ease;
   }
-  .chev.open { transform: rotate(90deg); }
+  .chev.open {
+    transform: rotate(90deg);
+  }
 
-  .job-name { font-weight: 600; font-size: var(--text-body, 14px); }
-  .grow { flex: 1 1 auto; min-width: 0; }
-  .ellipsis { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .nowrap { white-space: nowrap; }
+  .job-name {
+    font-weight: 600;
+    font-size: var(--text-body, 14px);
+  }
+  .grow {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+  .ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .nowrap {
+    white-space: nowrap;
+  }
 
-  .steps { list-style: none; margin: var(--sp-sm) 0 0; padding: 0 0 0 2px; display: flex; flex-direction: column; gap: 3px; }
-  .step { display: flex; align-items: center; gap: var(--sp-sm); font-size: var(--text-meta, 12px); min-width: 0; }
+  .steps {
+    list-style: none;
+    margin: var(--sp-sm) 0 0;
+    padding: 0 0 0 2px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .step {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-sm);
+    font-size: var(--text-meta, 12px);
+    min-width: 0;
+  }
   /* A dot, not an icon font: the state is a colour and a word beside it, so it still reads without
      the colour. */
-  .mark { width: 7px; height: 7px; border-radius: 50%; flex: 0 0 auto; background: var(--muted-foreground); }
-  .mark.ok { background: var(--success, #1a7f37); }
-  .mark.bad { background: var(--destructive, #cf222e); }
-  .mark.warn { background: var(--warning, #9a6700); }
-  .mark.run { background: var(--primary); }
+  .mark {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    flex: 0 0 auto;
+    background: var(--muted-foreground);
+  }
+  .mark.ok {
+    background: var(--success, #1a7f37);
+  }
+  .mark.bad {
+    background: var(--destructive, #cf222e);
+  }
+  .mark.warn {
+    background: var(--warning, #9a6700);
+  }
+  .mark.run {
+    background: var(--primary);
+  }
 
-  .log { margin-top: var(--sp-sm); }
+  .log {
+    margin-top: var(--sp-sm);
+  }
   .pre {
     margin: 0;
     max-height: 28rem;
@@ -433,7 +518,10 @@
     color: var(--muted-foreground);
     opacity: 0.75;
   }
-  .body { flex: 1 1 auto; min-width: 0; }
+  .body {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
 
   .badge {
     flex: 0 0 auto;
@@ -446,13 +534,31 @@
     min-width: 5.5em;
     text-align: center;
   }
-  .badge.ok { color: var(--success, #1a7f37); background: color-mix(in srgb, var(--success, #1a7f37) 14%, transparent); }
-  .badge.bad { color: var(--destructive, #cf222e); background: color-mix(in srgb, var(--destructive, #cf222e) 14%, transparent); }
-  .badge.warn { color: var(--warning, #9a6700); background: color-mix(in srgb, var(--warning, #9a6700) 16%, transparent); }
-  .badge.run { color: var(--primary); background: color-mix(in srgb, var(--primary) 14%, transparent); }
-  .badge.muted { color: var(--muted-foreground); background: var(--secondary); }
+  .badge.ok {
+    color: var(--success, #1a7f37);
+    background: color-mix(in srgb, var(--success, #1a7f37) 14%, transparent);
+  }
+  .badge.bad {
+    color: var(--destructive, #cf222e);
+    background: color-mix(in srgb, var(--destructive, #cf222e) 14%, transparent);
+  }
+  .badge.warn {
+    color: var(--warning, #9a6700);
+    background: color-mix(in srgb, var(--warning, #9a6700) 16%, transparent);
+  }
+  .badge.run {
+    color: var(--primary);
+    background: color-mix(in srgb, var(--primary) 14%, transparent);
+  }
+  .badge.muted {
+    color: var(--muted-foreground);
+    background: var(--secondary);
+  }
 
-  .state { padding: var(--sp-lg); text-align: center; }
+  .state {
+    padding: var(--sp-lg);
+    text-align: center;
+  }
   .state.err {
     color: var(--destructive);
     display: flex;
@@ -472,10 +578,20 @@
   }
 
   @media (max-width: 720px) {
-    .head { padding: var(--sp-sm); }
-    .body-scroll { padding: var(--sp-sm); }
-    .logbtn { padding: 8px 12px; }
-    .pre { max-height: 20rem; }
-    .retry { padding: 10px 16px; }
+    .head {
+      padding: var(--sp-sm);
+    }
+    .body-scroll {
+      padding: var(--sp-sm);
+    }
+    .logbtn {
+      padding: 8px 12px;
+    }
+    .pre {
+      max-height: 20rem;
+    }
+    .retry {
+      padding: 10px 16px;
+    }
   }
 </style>

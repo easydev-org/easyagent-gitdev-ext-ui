@@ -45,8 +45,10 @@
   })
 
   const totals = $derived.by(() => {
-    const adds = typeof payload.data['additions'] === 'number' ? (payload.data['additions'] as number) : 0
-    const dels = typeof payload.data['deletions'] === 'number' ? (payload.data['deletions'] as number) : 0
+    const adds =
+      typeof payload.data['additions'] === 'number' ? (payload.data['additions'] as number) : 0
+    const dels =
+      typeof payload.data['deletions'] === 'number' ? (payload.data['deletions'] as number) : 0
     return { adds, dels, count: fileRows.length }
   })
 
@@ -136,7 +138,6 @@
         <div class="muted totals">{dirRows.length} entr{dirRows.length === 1 ? 'y' : 'ies'}</div>
       {/if}
     </section>
-
   {:else if payload.tool === 'git-file-read'}
     <section class="sec">
       <h3 class="sec-title">
@@ -148,7 +149,6 @@
       <!-- The file, line-numbered, exactly as the tool returned it. -->
       <pre class="pre scroll">{payload.output}</pre>
     </section>
-
   {:else if payload.tool === 'git-file-patch'}
     <!-- ONE patch is ONE commit; the card's job is to show that the change is a single act and to
          name the files it touched. -->
@@ -174,7 +174,6 @@
         <div class="muted totals">{changeRows.length} file(s) in one commit</div>
       {/if}
     </section>
-
   {:else if payload.tool === 'git-sync-upstream'}
     <section class="sec">
       <h3 class="sec-title">
@@ -190,7 +189,6 @@
         <dd class="mono">{mono7(s('after'))}</dd>
       </dl>
     </section>
-
   {:else if payload.tool === 'gh-pr-files'}
     <section class="sec">
       <h3 class="sec-title">Changed files</h3>
@@ -210,7 +208,6 @@
         <div class="muted totals">{fileRows.length} file(s), +{totals.adds} -{totals.dels}</div>
       {/if}
     </section>
-
   {:else if payload.tool === 'gh-pr-diff'}
     <section class="sec">
       <h3 class="sec-title">Diff</h3>
@@ -219,24 +216,22 @@
       {/if}
       <pre class="pre scroll">{payload.output}</pre>
     </section>
-
   {:else if payload.tool === 'gh-pr-checks'}
     <section class="sec">
       <h3 class="sec-title">Checks</h3>
       <dl class="kv">
         <dt>state</dt>
         <dd class="mono">{s('state') || 'none'}</dd>
-        {#if s('sha')}<dt>commit</dt><dd class="mono">{s('sha').slice(0, 7)}</dd>{/if}
+        {#if s('sha')}<dt>commit</dt>
+          <dd class="mono">{s('sha').slice(0, 7)}</dd>{/if}
       </dl>
     </section>
     <pre class="pre scroll">{payload.output}</pre>
-
   {:else if payload.tool === 'gh-issue-show'}
     <section class="sec">
       <h3 class="sec-title">Item</h3>
       <pre class="pre scroll">{payload.output}</pre>
     </section>
-
   {:else}
     <!-- A template this build does not know. Showing the raw text is the honest fallback: better a
          readable dump than a blank card. -->
@@ -323,22 +318,51 @@
   /* Semantic colouring for the mirror's rows. Colour alone never carries the meaning — the badge
      also says `dir`, `add`, `del` — so it still reads with a monochrome palette or for somebody who
      cannot distinguish the hues. */
-  .badge.dir { color: var(--muted-foreground); }
-  .badge.file { color: var(--muted-foreground); }
-  .badge.add { color: var(--success, #1a7f37); }
-  .badge.del { color: var(--destructive, #cf222e); }
-  .badge.mod { color: var(--warning, #9a6700); }
+  .badge.dir {
+    color: var(--muted-foreground);
+  }
+  .badge.file {
+    color: var(--muted-foreground);
+  }
+  .badge.add {
+    color: var(--success, #1a7f37);
+  }
+  .badge.del {
+    color: var(--destructive, #cf222e);
+  }
+  .badge.mod {
+    color: var(--warning, #9a6700);
+  }
   .shac {
     flex: 0 0 auto;
     color: var(--muted-foreground);
   }
-  .grow { flex: 1 1 auto; min-width: 0; }
-  .ellipsis { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .nowrap { white-space: nowrap; }
-  .adds { color: var(--success, #1a7f37); flex: 0 0 auto; }
-  .dels { color: var(--destructive); flex: 0 0 auto; }
-  .muted { color: var(--muted-foreground); }
-  .totals { font-size: var(--text-micro, 10px); }
+  .grow {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+  .ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .nowrap {
+    white-space: nowrap;
+  }
+  .adds {
+    color: var(--success, #1a7f37);
+    flex: 0 0 auto;
+  }
+  .dels {
+    color: var(--destructive);
+    flex: 0 0 auto;
+  }
+  .muted {
+    color: var(--muted-foreground);
+  }
+  .totals {
+    font-size: var(--text-micro, 10px);
+  }
 
   /**
    * NARROW SCREENS.

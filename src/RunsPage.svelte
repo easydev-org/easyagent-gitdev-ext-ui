@@ -98,7 +98,9 @@
               <span class="grow">
                 <span class="name ellipsis">{r.name}</span>
                 <span class="sub mono muted ellipsis">
-                  {r.branch}{#if r.event} · {r.event}{/if}{#if r.attempt > 1} · attempt {r.attempt}{/if}
+                  {r.branch}{#if r.event}
+                    · {r.event}{/if}{#if r.attempt > 1}
+                    · attempt {r.attempt}{/if}
                 </span>
               </span>
               <span class="mono muted sha">{(r.headSha || '').slice(0, 7)}</span>
@@ -117,7 +119,9 @@
     min-height: 0;
     height: 100%;
   }
-  .rule { border-bottom: 1px solid var(--border); }
+  .rule {
+    border-bottom: 1px solid var(--border);
+  }
   .head {
     padding: var(--sp-md);
     display: flex;
@@ -132,7 +136,12 @@
        rather than the layout scrolling. */
     flex: 0 0 auto;
   }
-  .title { margin: 0; font-size: 1.05rem; font-weight: 600; overflow-wrap: anywhere; }
+  .title {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+  }
   .body-scroll {
     overflow: auto;
     padding: var(--sp-md);
@@ -141,7 +150,14 @@
     width: 100%;
     margin: 0 auto;
   }
-  .runs { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
+  .runs {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
   .run {
     display: flex;
     align-items: center;
@@ -152,13 +168,35 @@
     color: inherit;
     min-height: 44px;
   }
-  .run:hover { background: var(--secondary); }
-  .run:focus-visible { outline: 2px solid var(--primary); outline-offset: -2px; }
-  .grow { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 1px; }
-  .name { font-size: var(--text-body, 14px); }
-  .sub { font-size: var(--text-micro, 10px); }
-  .sha { flex: 0 0 auto; font-size: var(--text-micro, 10px); }
-  .ellipsis { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .run:hover {
+    background: var(--secondary);
+  }
+  .run:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: -2px;
+  }
+  .grow {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+  .name {
+    font-size: var(--text-body, 14px);
+  }
+  .sub {
+    font-size: var(--text-micro, 10px);
+  }
+  .sha {
+    flex: 0 0 auto;
+    font-size: var(--text-micro, 10px);
+  }
+  .ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 
   .badge {
     flex: 0 0 auto;
@@ -187,9 +225,15 @@
     color: var(--primary);
     background: color-mix(in srgb, var(--primary) 14%, transparent);
   }
-  .badge.muted { color: var(--muted-foreground); background: var(--secondary); }
+  .badge.muted {
+    color: var(--muted-foreground);
+    background: var(--secondary);
+  }
 
-  .state { padding: var(--sp-lg); text-align: center; }
+  .state {
+    padding: var(--sp-lg);
+    text-align: center;
+  }
   .state.err {
     color: var(--destructive);
     display: flex;
@@ -209,10 +253,18 @@
   }
 
   @media (max-width: 720px) {
-    .head { padding: var(--sp-sm); }
-    .body-scroll { padding: var(--sp-sm); }
+    .head {
+      padding: var(--sp-sm);
+    }
+    .body-scroll {
+      padding: var(--sp-sm);
+    }
     /* The sha is the first thing to go: the branch already identifies the work at this width. */
-    .sha { display: none; }
-    .retry { padding: 10px 16px; }
+    .sha {
+      display: none;
+    }
+    .retry {
+      padding: 10px 16px;
+    }
   }
 </style>

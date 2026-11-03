@@ -190,7 +190,9 @@
     background: none;
     font-weight: inherit;
   }
-  .badge.link:hover { text-decoration: underline; }
+  .badge.link:hover {
+    text-decoration: underline;
+  }
   .meta {
     display: flex;
     flex-wrap: wrap;
@@ -199,15 +201,24 @@
     color: var(--muted-foreground);
     align-items: center;
   }
-  .labels { display: flex; gap: 4px; flex-wrap: wrap; }
+  .labels {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+  }
   .label {
     padding: 1px 6px;
     border-radius: 999px;
     background: var(--secondary);
     color: var(--secondary-foreground, var(--foreground));
   }
-  .ext { color: var(--primary); text-decoration: none; }
-  .ext:hover { text-decoration: underline; }
+  .ext {
+    color: var(--primary);
+    text-decoration: none;
+  }
+  .ext:hover {
+    text-decoration: underline;
+  }
 
   /* The body scrolls, the header does not: the title and state stay visible while reading a long
      thread, which is the whole reason to open the page instead of a card. */
@@ -281,22 +292,40 @@
     text-transform: uppercase;
     user-select: none;
   }
-  .comment-body { grid-column: 2; min-width: 0; }
-  .who { font-weight: 600; font-size: var(--text-meta, 12px); }
-  .md { overflow-wrap: anywhere; }
+  .comment-body {
+    grid-column: 2;
+    min-width: 0;
+  }
+  .who {
+    font-weight: 600;
+    font-size: var(--text-meta, 12px);
+  }
+  .md {
+    overflow-wrap: anywhere;
+  }
   /* The issue's own description sits under the header, so it gets a little more room above it than a
      comment gets inside its card. */
-  .body-scroll > .md { margin-top: var(--sp-xs, 6px); }
-  .md :global(p) { margin: 0 0 var(--sp-sm); }
-  .md :global(p:last-child) { margin-bottom: 0; }
+  .body-scroll > .md {
+    margin-top: var(--sp-xs, 6px);
+  }
+  .md :global(p) {
+    margin: 0 0 var(--sp-sm);
+  }
+  .md :global(p:last-child) {
+    margin-bottom: 0;
+  }
   .md :global(pre) {
     overflow: auto;
     padding: var(--sp-sm);
     border-radius: var(--radius-sm);
     background: var(--card);
   }
-  .md :global(code) { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
-  .md :global(a) { color: var(--primary); }
+  .md :global(code) {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  .md :global(a) {
+    color: var(--primary);
+  }
 
   .state {
     padding: var(--sp-lg);
@@ -321,8 +350,14 @@
   }
 
   @media (max-width: 720px) {
-    .head { padding: var(--sp-sm); }
-    .body-scroll { padding: var(--sp-sm); }
-    .retry { padding: 10px 16px; }
+    .head {
+      padding: var(--sp-sm);
+    }
+    .body-scroll {
+      padding: var(--sp-sm);
+    }
+    .retry {
+      padding: 10px 16px;
+    }
   }
 </style>

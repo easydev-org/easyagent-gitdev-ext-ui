@@ -57,7 +57,9 @@
                 {#if r.name && r.name !== r.tag}<span class="rel-name ellipsis">{r.name}</span>{/if}
                 <span class="muted t-micro nowrap">{r.publishedAt?.slice(0, 10) ?? ''}</span>
                 {#if r.assets > 0}
-                  <span class="muted t-micro nowrap">{r.assets} asset{r.assets === 1 ? '' : 's'}</span>
+                  <span class="muted t-micro nowrap"
+                    >{r.assets} asset{r.assets === 1 ? '' : 's'}</span
+                  >
                 {/if}
                 <a class="ext" href={r.url} target="_blank" rel="noreferrer">GitHub ↗</a>
               </div>
@@ -76,7 +78,12 @@
 {/if}
 
 <style>
-  .page { display: flex; flex-direction: column; min-height: 0; height: 100%; }
+  .page {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    height: 100%;
+  }
   .head {
     padding: var(--sp-md);
     display: flex;
@@ -90,7 +97,11 @@
        rather than the layout scrolling. */
     flex: 0 0 auto;
   }
-  .title { margin: 0; font-size: 1.05rem; font-weight: 600; }
+  .title {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 600;
+  }
   .body-scroll {
     overflow: auto;
     padding: var(--sp-md);
@@ -99,20 +110,51 @@
     width: 100%;
     margin: 0 auto;
   }
-  .releases { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--sp-sm); }
+  .releases {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-sm);
+  }
   .release {
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
     padding: var(--sp-sm);
     background: var(--card);
   }
-  .rel-head { display: flex; align-items: baseline; gap: var(--sp-sm); flex-wrap: wrap; min-width: 0; }
-  .tag { font-weight: 600; }
-  .rel-name { color: var(--muted-foreground); min-width: 0; }
-  .ellipsis { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .nowrap { white-space: nowrap; }
-  .ext { color: var(--primary); text-decoration: none; font-size: var(--text-micro, 11px); margin-left: auto; }
-  .ext:hover { text-decoration: underline; }
+  .rel-head {
+    display: flex;
+    align-items: baseline;
+    gap: var(--sp-sm);
+    flex-wrap: wrap;
+    min-width: 0;
+  }
+  .tag {
+    font-weight: 600;
+  }
+  .rel-name {
+    color: var(--muted-foreground);
+    min-width: 0;
+  }
+  .ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .nowrap {
+    white-space: nowrap;
+  }
+  .ext {
+    color: var(--primary);
+    text-decoration: none;
+    font-size: var(--text-micro, 11px);
+    margin-left: auto;
+  }
+  .ext:hover {
+    text-decoration: underline;
+  }
 
   .badge {
     font-size: var(--text-micro, 10px);
@@ -120,20 +162,39 @@
     border-radius: 999px;
     border: 1px solid var(--border);
   }
-  .badge.warn { color: var(--warning, #9a6700); border-color: currentColor; }
-  .badge.muted { color: var(--muted-foreground); }
+  .badge.warn {
+    color: var(--warning, #9a6700);
+    border-color: currentColor;
+  }
+  .badge.muted {
+    color: var(--muted-foreground);
+  }
 
-  .notes { margin-top: var(--sp-sm); }
+  .notes {
+    margin-top: var(--sp-sm);
+  }
   .notes summary {
     cursor: pointer;
     font-size: var(--text-micro, 11px);
     color: var(--muted-foreground);
   }
-  .notes summary:hover { color: var(--foreground); }
-  .md { margin-top: var(--sp-sm); overflow-wrap: anywhere; max-height: 24rem; overflow: auto; }
-  .md :global(p) { margin: 0 0 var(--sp-sm); }
+  .notes summary:hover {
+    color: var(--foreground);
+  }
+  .md {
+    margin-top: var(--sp-sm);
+    overflow-wrap: anywhere;
+    max-height: 24rem;
+    overflow: auto;
+  }
+  .md :global(p) {
+    margin: 0 0 var(--sp-sm);
+  }
 
-  .state { padding: var(--sp-lg); text-align: center; }
+  .state {
+    padding: var(--sp-lg);
+    text-align: center;
+  }
   .state.err {
     color: var(--destructive);
     display: flex;
@@ -153,8 +214,14 @@
   }
 
   @media (max-width: 720px) {
-    .head { padding: var(--sp-sm); }
-    .body-scroll { padding: var(--sp-sm); }
-    .retry { padding: 10px 16px; }
+    .head {
+      padding: var(--sp-sm);
+    }
+    .body-scroll {
+      padding: var(--sp-sm);
+    }
+    .retry {
+      padding: 10px 16px;
+    }
   }
 </style>

@@ -249,7 +249,7 @@
     reportCardHeight()
   })
 
-  receiveCardData((p) => {
+  receiveCardData(p => {
     cardPayload = p
     error = ''
     // A tool may say where its result lives. The route is the tool's to build — only it knows which
@@ -259,9 +259,7 @@
     // `view` is one of its keys — reading `p.view` returned undefined for every card, so the "open the
     // full view" button never appeared and nothing reported it.
     const v = (p.data as { view?: { route?: string; title?: string } } | undefined)?.view
-    openTarget = v?.route
-      ? { route: v.route, label: 'Open', title: v.title ?? 'Open' }
-      : null
+    openTarget = v?.route ? { route: v.route, label: 'Open', title: v.title ?? 'Open' } : null
   })
 
   /**
@@ -295,7 +293,6 @@
       go('#/blob/' + route.repo + '/' + route.path + '?ref=' + encodeURIComponent(name))
     }
   }
-
 </script>
 
 {#if route.kind === 'card'}
@@ -305,7 +302,11 @@
     <ToolCard payload={cardPayload} />
     {#if openTarget}
       <div class="card-action">
-        <button type="button" class="open" onclick={() => requestOpenView(openTarget!.route, openTarget!.title)}>
+        <button
+          type="button"
+          class="open"
+          onclick={() => requestOpenView(openTarget!.route, openTarget!.title)}
+        >
           {openTarget.label} →
         </button>
       </div>
@@ -350,7 +351,12 @@
         <div class="page-pad">
           <div class="refbar">
             <label class="reflabel" for="refsel">ref</label>
-            <select id="refsel" class="refsel" value={ref} onchange={(e) => pickRef(e.currentTarget.value)}>
+            <select
+              id="refsel"
+              class="refsel"
+              value={ref}
+              onchange={e => pickRef(e.currentTarget.value)}
+            >
               {#if refs.length === 0}
                 <option value="">(no branches)</option>
               {/if}
@@ -395,10 +401,15 @@
              same file on two branches without going back to the tree. -->
         <div class="page-pad">
           <div class="refbar">
-            <a class="backlink" href={ref && route.repo ? `#/tree/${route.repo}?ref=${encodeURIComponent(ref)}&dir=${encodeURIComponent(route.path.split('/').slice(0, -1).join('/'))}` : `#/tree/${route.repo}`}>
+            <a
+              class="backlink"
+              href={ref && route.repo
+                ? `#/tree/${route.repo}?ref=${encodeURIComponent(ref)}&dir=${encodeURIComponent(route.path.split('/').slice(0, -1).join('/'))}`
+                : `#/tree/${route.repo}`}
+            >
               ← {route.repo}
             </a>
-            <select class="refsel" value={ref} onchange={(e) => pickRef(e.currentTarget.value)}>
+            <select class="refsel" value={ref} onchange={e => pickRef(e.currentTarget.value)}>
               {#each refs as r (r.name)}
                 <option value={r.name}>{r.name}</option>
               {/each}
@@ -477,7 +488,10 @@
     background: var(--background);
     color: var(--foreground);
   }
-  .refsel:focus-visible { outline: 2px solid var(--primary); outline-offset: 1px; }
+  .refsel:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 1px;
+  }
   .backlink {
     font-size: var(--text-meta, 12px);
     color: var(--primary);
@@ -486,7 +500,9 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  .backlink:hover { text-decoration: underline; }
+  .backlink:hover {
+    text-decoration: underline;
+  }
 
   .state {
     padding: var(--sp-xl);

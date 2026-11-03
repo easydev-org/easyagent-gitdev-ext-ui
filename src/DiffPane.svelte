@@ -43,10 +43,9 @@
       </li>
     {/each}
   </ul>
-  <pre class="mono diff"
-    >{#each diff.split('\n') as line}<span class={cls(line)}>{line || ' '}
-</span>{/each}</pre
-  >
+  <pre class="mono diff">{#each diff.split('\n') as line}<span class={cls(line)}
+        >{line || ' '}
+</span>{/each}</pre>
 {/if}
 
 <style>
