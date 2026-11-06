@@ -104,11 +104,7 @@ export function langOf(path: string): string {
  * Null (not an exception, not escaped plain text) so the caller can fall back to its own <pre>:
  * a viewer that degrades to plain text is fine, one that shows a stack trace is not.
  */
-export async function highlight(
-  code: string,
-  lang: string,
-  dark: boolean,
-): Promise<string | null> {
+export async function highlight(code: string, lang: string, dark: boolean): Promise<string | null> {
   if (lang === '') return null
   try {
     const h = await highlighter()
@@ -118,9 +114,7 @@ export async function highlight(
     // SINGULAR `Number`: the export is `transformerRenderLineNumber`. It prepends a
     // `<span class="line-number">` to every line — a real element, not a CSS counter, so the numbers
     // belong to the SOURCE lines rather than to the rendered rows.
-    const { transformerRenderLineNumber } = await import(
-      '@shikijs/transformers'
-    )
+    const { transformerRenderLineNumber } = await import('@shikijs/transformers')
     return h.codeToHtml(code, {
       lang,
       theme: dark ? 'github-dark' : 'github-light',

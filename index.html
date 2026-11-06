@@ -13,9 +13,12 @@
       // fallback so a standalone open still looks right.
       ;(() => {
         const q = new URLSearchParams(location.search).get('theme')
-        const m = q === 'dark' || q === 'light'
-          ? q
-          : matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+        const m =
+          q === 'dark' || q === 'light'
+            ? q
+            : matchMedia('(prefers-color-scheme: dark)').matches
+              ? 'dark'
+              : 'light'
         document.documentElement.dataset.theme = m
       })()
       // Mark card mode BEFORE first paint.

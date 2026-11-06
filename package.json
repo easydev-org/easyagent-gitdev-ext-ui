@@ -4,13 +4,16 @@
   "type": "module",
   "version": "0.1.0",
   "scripts": {
+    "dev": "vite",
     "build": "vite build",
     "check": "svelte-check --tsconfig ./tsconfig.json",
-    "dev": "vite",
-    "format:check": "biome check .",
-    "format:fix": "biome check --write .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "format:fix": "prettier --write .",
     "format:svelte": "prettier --check \"src/**/*.svelte\"",
     "format:svelte:fix": "prettier --write \"src/**/*.svelte\"",
+    "lint": "biome lint .",
+    "lint:fix": "biome lint --write .",
     "proto": "cd proto && PATH=\"$(pwd)/../node_modules/.bin:$PATH\" buf generate"
   },
   "devDependencies": {

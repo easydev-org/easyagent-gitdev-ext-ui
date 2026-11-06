@@ -302,10 +302,7 @@ async function direct(
   }
 }
 
-async function get<T>(
-  path: string,
-  params: Record<string, string | undefined> = {},
-): Promise<T> {
+async function get<T>(path: string, params: Record<string, string | undefined> = {}): Promise<T> {
   const r = await ask(`${path}?${qs(params)}`)
   if (!r.ok) {
     const body = r.body as { error?: string } | string | undefined
@@ -431,20 +428,11 @@ export const api = {
     return issueView(i)
   },
   issueComments: async (repo: string, number: number) =>
-    (await client.listIssueComments({ repo, number })).comments.map(
-      commentView,
-    ),
+    (await client.listIssueComments({ repo, number })).comments.map(commentView),
   // Issues OR pull requests. One query with a filter, applied on the SERVER so a caller cannot forget
   // it — and a `kind` that is neither is refused rather than silently ignored.
-  issues: async (
-    repo: string,
-    kind: 'issue' | 'pr',
-    state = 'open',
-    limit = 50,
-  ) =>
-    (await client.listIssues({ repo, kind, state, limit })).items.map(
-      issueView,
-    ),
+  issues: async (repo: string, kind: 'issue' | 'pr', state = 'open', limit = 50) =>
+    (await client.listIssues({ repo, kind, state, limit })).items.map(issueView),
   // CI runs. The log is fetched PER JOB and only when asked: a run's logs are megabytes, and a page
   // that fetched them all would be slow for a reader who wanted one job.
   runs: async (repo: string, limit = 20) =>
